@@ -1,3 +1,4 @@
+from django.db.models import Count, Case, When
 from rest_framework import viewsets
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
@@ -8,8 +9,8 @@ from main.models import Blog, Mark
 
 
 class BlogsView(viewsets.ModelViewSet):
-    queryset = Blog.objects.all()
     serializer_class = BlogsSerializer
+    queryset = Blog.objects.all().annotate(ann_likes=Count(Case(When(marks__like=True, then=1))))
 
 
 class MarkView(UpdateModelMixin, GenericViewSet):

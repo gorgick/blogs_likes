@@ -11,12 +11,13 @@ class MarksSerializer(ModelSerializer):
 
 
 class BlogsSerializer(ModelSerializer):
-    marks = MarksSerializer(many=True)
-    likes_count = serializers.SerializerMethodField()
+    # marks = MarksSerializer(many=True)
+    # likes_count = serializers.SerializerMethodField()
+    ann_likes = serializers.IntegerField()
 
     class Meta:
         model = Blog
-        fields = "__all__"
+        fields = ('id', 'ann_likes', 'title', 'text', 'image_blog', 'owner')
 
-    def get_likes_count(self, instance):
-        return Mark.objects.filter(blog=instance, like=True).count()
+    # def get_likes_count(self, instance):
+    #     return Mark.objects.filter(blog=instance, like=True).count()
